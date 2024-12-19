@@ -455,7 +455,7 @@ void loop() {
   encoder.update();
   button.update();
   int randomFreq = random(0,7);
-  int randomSource = random(0,11);
+  int randomSource = random(0,12);
 
   int direction = encoder.getDirection();
   if (direction != 0) {
