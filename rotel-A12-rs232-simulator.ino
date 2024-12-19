@@ -4,8 +4,8 @@
 
 
 #define pinButton 10
-#define pinEncButton 3 
-#define pinEncPortA 6 
+#define pinEncButton 3
+#define pinEncPortA 6
 #define pinEncPortB 2
 
 RotaryEncoder encoder(pinEncPortB, pinEncPortA, pinEncButton); // Pin A, Pin B, Button-Pin
@@ -14,9 +14,9 @@ ButtonDebounce button(pinButton);
 // Device state variables
 enum PowerState { STANDBY, ON };
 enum UpdateMode { AUTO, MANUAL };
-enum SourceInput { 
-  CD, COAX1, COAX2, OPT1, OPT2, AUX1, AUX2, 
-  TUNER, PHONO, USB, BLUETOOTH, PC_USB 
+enum SourceInput {
+  CD, COAX1, COAX2, OPT1, OPT2, AUX1, AUX2,
+  TUNER, PHONO, USB, BLUETOOTH, PC_USB
 };
 String Frequencies[8] = {"off", "32", "44.1", "48", "88.2", "96", "176.4", "192"};
 
@@ -221,7 +221,7 @@ public:
       }
     }
   }
-  
+
   void processCommand(String command) {
     // Remove any whitespace
     command.trim();
@@ -424,7 +424,7 @@ void setup() {
   button.begin();
 
   Serial.begin(115200);
-  
+
   // Additional debugging
   while (!Serial) {
     ; // Wait for serial port to connect
@@ -435,12 +435,12 @@ void setup() {
 void loop() {
   if (Serial.available()) {
     char inChar = (char)Serial.read();
-    
+
     // Debug: print each incoming character
     //Serial.print("Received char: ");
     //Serial.println(inChar);
     //Serial.println(inputBuffer);
-    
+
     if (inChar == '!' || inChar == '?') {
       // Process the complete command
       inputBuffer += inChar;
@@ -454,7 +454,7 @@ void loop() {
   // encoder changes volume level
   encoder.update();
   button.update();
-  int randomFreq = random(0,7);
+  int randomFreq = random(0,8);
   int randomSource = random(0,12);
 
   int direction = encoder.getDirection();
@@ -462,17 +462,17 @@ void loop() {
     if (direction == 1) {
           if (volume < 96) {
             volume = rotelDevice.getVolumeLevel();
-            rotelDevice.setVolumeLevel(++volume); 
+            rotelDevice.setVolumeLevel(++volume);
             }
-      } else 
+      } else
       {
         if (volume > 0) {
           volume = rotelDevice.getVolumeLevel();
-          rotelDevice.setVolumeLevel(--volume); 
+          rotelDevice.setVolumeLevel(--volume);
           }
       }
     }
-    
+
   // encoder button sets random frequency
   if (encoder.isButtonPressed()) {
       rotelDevice.setFrequency(randomFreq);
