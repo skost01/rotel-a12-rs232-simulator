@@ -133,7 +133,7 @@ public:
   void setPowerState(PowerState state) {
     powerState = state;
     if (updateMode == AUTO) {
-      Serial.println(state == ON ? "power=on$" : "power=standby$");
+      Serial.print(state == ON ? "power=on$" : "power=standby$");
     }
   }
 
@@ -144,7 +144,7 @@ public:
         Serial.print("volume=");
         Serial.print(volumeLevel < 10 ? "0" : "");
         Serial.print(volumeLevel);
-        Serial.println("$");
+        Serial.print("$");
       }
     }
   }
@@ -152,21 +152,21 @@ public:
   void setMuteState(bool mute) {
     muteState = mute;
     if (updateMode == AUTO) {
-      Serial.println(mute ? "mute=on$" : "mute=off$");
+      Serial.print(mute ? "mute=on$" : "mute=off$");
     }
   }
 
   void setCurrentSource(SourceInput source) {
     currentSource = source;
     if (updateMode == AUTO) {
-      Serial.println("source=" + sourceToString() + "$");
+      Serial.print("source=" + sourceToString() + "$");
     }
   }
 
   void setBypassState(bool bypass) {
     bypassState = bypass;
     if (updateMode == AUTO) {
-      Serial.println(bypass ? "bypass=on$" : "bypass=off$");
+      Serial.print(bypass ? "bypass=on$" : "bypass=off$");
     }
   }
 
@@ -175,7 +175,7 @@ public:
       bassLevel = bass;
       if (updateMode == AUTO) {
         Serial.print("bass=");
-        Serial.println(formatSignedInt(bassLevel) + "$");
+        Serial.print(formatSignedInt(bassLevel) + "$");
       }
     }
   }
@@ -185,7 +185,7 @@ public:
       trebleLevel = treble;
       if (updateMode == AUTO) {
         Serial.print("treble=");
-        Serial.println(formatSignedInt(trebleLevel) + "$");
+        Serial.print(formatSignedInt(trebleLevel) + "$");
       }
     }
   }
@@ -198,7 +198,7 @@ public:
         signedBalanceLevel.replace("+","R");
         signedBalanceLevel.replace("-","L");
         Serial.print("balance=");
-        Serial.println(signedBalanceLevel + "$");
+        Serial.print(signedBalanceLevel + "$");
       }
     }
   }
@@ -206,9 +206,9 @@ public:
   void setUpdateMode(UpdateMode mode) {
     updateMode = mode;
     if (mode == AUTO) {
-      Serial.println("update_mode=auto$");
+      Serial.print("update_mode=auto$");
     } else {
-      Serial.println("update_mode=manual$");
+      Serial.print("update_mode=manual$");
     }
   }
 
@@ -217,7 +217,7 @@ public:
       frequency = freq;
       if (updateMode == AUTO) {
         Serial.print("freq=");
-        Serial.println(freqIntToString(frequency) + "$");
+        Serial.print(freqIntToString(frequency) + "$");
       }
     }
   }
@@ -360,11 +360,11 @@ public:
 
     // Feedback request commands
     else if (command == "power?") {
-      Serial.println(getPowerState() == ON ? "power=on$" : "power=standby$");
+      Serial.print(getPowerState() == ON ? "power=on$" : "power=standby$");
       return;
     }
     else if (command == "source?") {
-      Serial.println("source=" + sourceToString() + "$");
+      Serial.print("source=" + sourceToString() + "$");
       return;
     }
     else if (command == "volume?") {
@@ -372,25 +372,25 @@ public:
       Serial.print("volume=");
       Serial.print(vol < 10 ? "0" : "");
       Serial.print(vol);
-      Serial.println("$");
+      Serial.print("$");
       return;
     }
     else if (command == "mute?") {
-      Serial.println(getMuteState() ? "mute=on$" : "mute=off$");
+      Serial.print(getMuteState() ? "mute=on$" : "mute=off$");
       return;
     }
     else if (command == "bypass?") {
-      Serial.println(getBypassState() ? "bypass=on$" : "bypass=off$");
+      Serial.print(getBypassState() ? "bypass=on$" : "bypass=off$");
       return;
     }
     else if (command == "bass?") {
       Serial.print("bass=");
-      Serial.println(formatSignedInt(getBassLevel()) + "$");
+      Serial.print(formatSignedInt(getBassLevel()) + "$");
       return;
     }
     else if (command == "treble?") {
       Serial.print("treble=");
-      Serial.println(formatSignedInt(getTrebleLevel()) + "$");
+      Serial.print(formatSignedInt(getTrebleLevel()) + "$");
       return;
     }
     else if (command == "balance?") {
@@ -399,17 +399,17 @@ public:
       signedBalanceLevel.replace("+","R");
       signedBalanceLevel.replace("-","L");
       Serial.print("balance=");
-      Serial.println(signedBalanceLevel + "$");
+      Serial.print(signedBalanceLevel + "$");
       return;
     }
     else if (command == "freq?") {
       Serial.print("freq=");
-      Serial.println(freqIntToString(getFrequency()) + "$");
+      Serial.print(freqIntToString(getFrequency()) + "$");
       return;
     }
 
     // If no command matched
-    Serial.println("Error: Unknown command$");
+    Serial.print("Error: Unknown command$");
   }
 }
 ;
@@ -429,7 +429,7 @@ void setup() {
   while (!Serial) {
     ; // Wait for serial port to connect
   }
-  Serial.println("Rotel A12 Simulator Ready$");
+  Serial.print("Rotel A12 Simulator Ready$");
 }
 
 void loop() {
